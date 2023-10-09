@@ -24,6 +24,7 @@ const Navbar = () => {
       <ul>
         <CustomLink to="/">Home</CustomLink>
         <CustomLink to="/creative-idea-component">Creativity</CustomLink>
+        <CustomLink to="/snow">Snow</CustomLink>
       </ul>
     </nav>
   )

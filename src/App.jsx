@@ -1,7 +1,7 @@
 import React from 'react';
 import {Routes, Route,} from "react-router-dom";
 import {Box} from "@mui/material";
-import { Dummy, HomePage, Navbar } from "./components";
+import { Dummy, HomePage, Navbar, Snow } from "./components";
 
 const App = () => (
   <>
@@ -10,6 +10,7 @@ const App = () => (
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/snow" element={<Snow />} />
           <Route path="/creative-idea-component" element={<Dummy />} />
         </Routes>
       </div>

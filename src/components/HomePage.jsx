@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Box, Typography, Paper, IconButton} from "@mui/material"
 import SendIcon from '@mui/icons-material/Send';
+import {fetchTemperature} from "../../utils/fetcher";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +11,19 @@ const HomePage = () => {
     const [minTemp, setMintemp] = useState(0);
     const [maxTemp, setMaxtemp] = useState(0);
 
-    const test_temp=23;
+    const [temp, setTemp] = useState(0);
+    
+    const getTemperatureData = async () => {
+        setTemp(null);
+        
+        const res = await fetchTemperature();
+        const res_temp=res.temperature;
+        
+        console.log("backend response: ", res_temp);
+
+        setTemp(res_temp);
+
+    }
 
     const notifyCorrect = () => toast.success("You are under correct temperature",{
         position: "bottom-right",
@@ -22,7 +35,7 @@ const HomePage = () => {
         progress: undefined,
         theme: "light"
     });
-    const notifyLow = () => toast.info(`Current temperature is too low: ${test_temp}°C`,{
+    const notifyLow = () => toast.info(`Current temperature is too low: ${temp}°C`,{
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -32,7 +45,7 @@ const HomePage = () => {
         progress: undefined,
         theme: "light",
     });
-    const notifyHigh = () => toast.warn(`Current temperature is too high: ${test_temp}°C`,{
+    const notifyHigh = () => toast.warn(`Current temperature is too high: ${temp}°C`,{
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -46,12 +59,14 @@ const HomePage = () => {
     const onhandleSubmit = (e)=> {
         e.preventDefault();
 
-        console.log(location);
-        if(minTemp<=test_temp && maxTemp>=test_temp)
+        getTemperatureData();
+
+        if(minTemp<=temp && maxTemp>=temp)
             notifyCorrect();
-        else if(minTemp>test_temp)
+        else if(minTemp>temp){
             notifyLow();
-        else if(maxTemp<test_temp)
+        }
+        else if(maxTemp<temp)
             notifyHigh();
     }
 
